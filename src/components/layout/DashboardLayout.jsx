@@ -5,13 +5,15 @@ const DashboardLayout = ({ children }) => {
   const location = useLocation();
 
   const navigation = [
-    { name: 'Dashboard', path: '/dashboard', icon: '📊' },
-    { name: 'Products', path: '/products', icon: '🛒' },
-    { name: 'Inventory', path: '/inventory', icon: '📦' },
-    { name: 'Suppliers', path: '/suppliers', icon: '🏢' },
-    { name: 'Sales', path: '/sales', icon: '💰' },
-    { name: 'Customers', path: '/customers', icon: '👥' },
-    { name: 'Analytics', path: '/analytics', icon: '📈' },
+    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Products', path: '/products' },
+    { name: 'Inventory', path: '/inventory' },
+    { name: 'Suppliers', path: '/suppliers' },
+    { name: 'Sales', path: '/sales' },
+    { name: 'Customers', path: '/customers' },
+    { name: 'Leads', path: '/leads' },
+    { name: 'Marketing', path: '/marketing' },
+    { name: 'Analytics', path: '/analytics' },
   ];
 
   const isActive = (path) => {
@@ -26,7 +28,7 @@ const DashboardLayout = ({ children }) => {
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200">
         <div className="p-6">
-          <h1 className="text-xl font-bold text-gray-800">RetailCRM</h1>
+          <h1 className="text-xl font-bold text-gray-800">Retail CRM</h1>
           <p className="text-sm text-gray-600">Super Market Management</p>
         </div>
         <nav className="mt-6">
@@ -51,18 +53,8 @@ const DashboardLayout = ({ children }) => {
         <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="flex items-center justify-between px-6 py-4">
             <div className="flex items-center space-x-4">
-              <h2 className="text-xl font-semibold text-gray-800">
-                {location.pathname === '/dashboard' && 'Dashboard'}
-                {location.pathname === '/products' && 'Product Management'}
-                {location.pathname === '/inventory' && 'Inventory Management'}
-                {location.pathname === '/suppliers' && 'Supplier Management'}
-                {location.pathname === '/sales' && 'Sales Management'}
-                {location.pathname === '/customers' && 'Customer Management'}
-                {location.pathname === '/analytics' && 'Analytics'}
-                {location.pathname.startsWith('/crm') && 'CRM Management'}
-              </h2>
+              
               <div className="hidden md:flex items-center space-x-2 text-sm text-gray-500">
-                <span>📅</span>
                 <span>{new Date().toLocaleDateString('en-US', { 
                   weekday: 'long', 
                   year: 'numeric', 

@@ -323,13 +323,6 @@ const Analytics = () => {
               <p className="text-gray-600 mt-1">Track store performance and business metrics</p>
             </div>
             <div className="flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-2">
-              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                M
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-900">Store Manager</p>
-                <p className="text-xs text-gray-500">manager@retailstore.com</p>
-              </div>
             </div>
           </div>
         </div>
@@ -456,6 +449,7 @@ const Analytics = () => {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
               <h2 className="text-lg font-semibold text-gray-900">Revenue by Category</h2>
               <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option>Last 7 days</option>
                 <option>Last 30 days</option>
                 <option>Last 90 days</option>
                 <option>This Year</option>

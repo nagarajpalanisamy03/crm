@@ -1,238 +1,355 @@
 import React, { useState } from 'react';
 
 const Leads = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [activeTab, setActiveTab] = useState('potential');
 
-  const leads = [
+  const potentialLeads = [
     {
       id: 1,
-      name: 'Enterprise Software Deal',
-      company: 'Tech Corporation',
-      contact: 'Sarah Johnson',
-      value: '$50,000',
-      status: 'Qualified',
-      source: 'Website',
-      created: 'Jan 26, 2025',
-      nextAction: 'Schedule Demo'
+      name: 'Maria Gonzalez',
+      contact: 'maria.g@email.com',
+      phone: '+1 (555) 234-5678',
+      type: 'Corporate Client',
+      interest: 'Bulk Grocery Orders',
+      value: '$2,500/month',
+      source: 'Website Inquiry',
+      status: 'hot',
+      lastContact: '2024-01-15',
+      notes: 'Interested in weekly office supply delivery. Decision maker for 50 employees.'
     },
     {
       id: 2,
-      name: 'Marketing Services',
-      company: 'Startup Innovations',
-      contact: 'Michael Chen',
-      value: '$25,000',
-      status: 'Contacted',
-      source: 'Referral',
-      created: 'Mar 14, 2025',
-      nextAction: 'Send Proposal'
-    },
-    {
-      id: 3,
-      name: 'Consulting Package',
-      company: 'Enterprise Solutions Ltd',
-      contact: 'Emma Davis',
-      value: '$15,000',
-      status: 'New',
-      source: 'Conference',
-      created: 'Oct 20, 2025',
-      nextAction: 'Initial Call'
-    },
-    {
-      id: 4,
-      name: 'Product Subscription',
-      company: 'Business Partners Inc',
-      contact: 'Robert Brown',
-      value: '$8,000',
-      status: 'Proposal',
-      source: 'Website',
-      created: 'Dec 25, 2025',
-      nextAction: 'Follow Up'
-    },
-    {
-      id: 5,
-      name: 'Custom Development',
-      company: 'Digital Transform Co',
-      contact: 'Jennifer Wilson',
-      value: '$35,000',
-      status: 'Negotiation',
-      source: 'Partner',
-      created: 'May 1, 2025',
-      nextAction: 'Finalize Contract'
+      name: 'Restaurant "La Piazza"',
+      contact: 'manager@lapiazza.com',
+      phone: '+1 (555) 345-6789',
+      type: 'Business Account',
+      interest: 'Daily Produce Delivery',
+      value: '$1,800/week',
+      source: 'Store Visit',
+      status: 'hot',
+      lastContact: '2024-01-14',
+      notes: 'New Italian restaurant opening next month. Needs reliable supplier.'
     }
   ];
 
-  const leadStats = [
-    { title: 'Total Leads', value: '156', change: '+8%' },
-    { title: 'New This Month', value: '42', change: '+12%' },
-    { title: 'Conversion Rate', value: '18.5%', change: '+2.3%' },
-    { title: 'Pipeline Value', value: '$1.2M', change: '+15%' }
+  const loyaltyLeads = [
+    {
+      id: 1,
+      name: 'John Smith',
+      contact: 'john.smith@email.com',
+      phone: '+1 (555) 123-4567',
+      type: 'Loyalty Member',
+      points: '2,450',
+      tier: 'Gold',
+      lifetimeValue: '$8,450',
+      lastVisit: '2024-01-15',
+      potential: 'Referral Program'
+    },
+    {
+      id: 2,
+      name: 'Sarah Johnson',
+      contact: 'sarah.j@email.com',
+      phone: '+1 (555) 987-6543',
+      type: 'Loyalty Member',
+      points: '1,230',
+      tier: 'Silver',
+      lifetimeValue: '$3,890',
+      lastVisit: '2024-01-14',
+      potential: 'Upgrade to Gold'
+    }
   ];
 
-  const filteredLeads = leads.filter(lead =>
-    (lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     lead.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     lead.contact.toLowerCase().includes(searchTerm.toLowerCase())) &&
-    (statusFilter === 'all' || lead.status === statusFilter)
-  );
+  const corporateAccounts = [
+    {
+      id: 1,
+      company: 'TechCorp Inc.',
+      contact: 'Robert Wilson',
+      position: 'Office Manager',
+      email: 'r.wilson@techcorp.com',
+      phone: '+1 (555) 111-2222',
+      employees: '150',
+      contractValue: '$12,000/month',
+      status: 'Active',
+      startDate: '2023-06-01',
+      discount: '15% Corporate',
+      lastOrder: '2024-01-15',
+      totalSpent: '$156,800'
+    },
+    {
+      id: 2,
+      company: 'Global Consulting Ltd.',
+      contact: 'Jennifer Martinez',
+      position: 'HR Director',
+      email: 'j.martinez@globalconsult.com',
+      phone: '+1 (555) 333-4444',
+      employees: '85',
+      contractValue: '$8,500/month',
+      status: 'Active',
+      startDate: '2023-09-15',
+      discount: '12% Corporate',
+      lastOrder: '2024-01-14',
+      totalSpent: '$42,300'
+    }
+  ];
 
-  const getStatusBadge = (status) => {
-    const styles = {
-      'New': 'bg-blue-100 text-blue-800 border border-blue-200',
-      'Contacted': 'bg-yellow-100 text-yellow-800 border border-yellow-200',
-      'Qualified': 'bg-green-100 text-green-800 border border-green-200',
-      'Proposal': 'bg-purple-100 text-purple-800 border border-purple-200',
-      'Negotiation': 'bg-orange-100 text-orange-800 border border-orange-200'
-    };
-    return `px-2 py-1 text-xs rounded-full ${styles[status]}`;
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'hot': return 'bg-blue-100 text-blue-800';
+      case 'warm': return 'bg-blue-50 text-blue-700';
+      case 'cold': return 'bg-gray-100 text-gray-800';
+      case 'Active': return 'bg-blue-100 text-blue-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
   };
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h1 className="text-2xl font-bold text-gray-800">Lead Management</h1>
-        <p className="text-gray-600">Track and manage your sales pipeline</p>
+        <h1 className="text-2xl font-bold text-gray-800">Leads Management</h1>
+        <p className="text-gray-600">Business Accounts and Partnership Management</p>
       </div>
 
-      {/* Lead Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {leadStats.map((stat, index) => (
-          <div key={index} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-sm text-gray-600">{stat.title}</p>
-                <p className="text-2xl font-bold text-gray-800 mt-1">{stat.value}</p>
-              </div>
-              <span className="text-sm font-medium text-green-600 bg-green-50 px-2 py-1 rounded">
-                {stat.change}
-              </span>
+      {/* Leads Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-sm text-gray-600">Active Leads</p>
+              <p className="text-2xl font-bold text-gray-800 mt-1">23</p>
             </div>
+            <span className="text-sm font-medium px-2 py-1 rounded text-blue-600 bg-blue-50">
+              +5
+            </span>
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* Search and Actions Bar */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <div className="relative flex-1 sm:w-64">
-              <input
-                type="text"
-                placeholder="Search leads..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-              <span className="absolute left-3 top-2.5 text-gray-400">🔍</span>
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-sm text-gray-600">Hot Leads</p>
+              <p className="text-2xl font-bold text-gray-800 mt-1">8</p>
             </div>
-            <select 
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="all">All Status</option>
-              <option value="New">New</option>
-              <option value="Contacted">Contacted</option>
-              <option value="Qualified">Qualified</option>
-              <option value="Proposal">Proposal</option>
-              <option value="Negotiation">Negotiation</option>
-            </select>
+            <span className="text-sm font-medium px-2 py-1 rounded text-blue-600 bg-blue-50">
+              +3
+            </span>
           </div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors w-full sm:w-auto">
-            + Add Lead
-          </button>
+        </div>
+
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-sm text-gray-600">Pipeline Value</p>
+              <p className="text-2xl font-bold text-gray-800 mt-1">$45.8K</p>
+            </div>
+            <span className="text-sm font-medium px-2 py-1 rounded text-blue-600 bg-blue-50">
+              +$12.5K
+            </span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-sm text-gray-600">Conversion Rate</p>
+              <p className="text-2xl font-bold text-gray-800 mt-1">42%</p>
+            </div>
+            <span className="text-sm font-medium px-2 py-1 rounded text-blue-600 bg-blue-50">
+              +8%
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Leads Table */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">LEAD NAME</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">COMPANY</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">CONTACT</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">VALUE</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">STATUS</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">SOURCE</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">CREATED</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">NEXT ACTION</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {filteredLeads.map(lead => (
-                <tr key={lead.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="py-3 px-4">
-                    <div className="font-medium text-gray-900">{lead.name}</div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="text-gray-600">{lead.company}</div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="text-gray-600">{lead.contact}</div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="font-medium text-gray-900">{lead.value}</div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <span className={getStatusBadge(lead.status)}>
-                      {lead.status}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="text-gray-600">{lead.source}</div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="text-gray-600">{lead.created}</div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="text-gray-600">{lead.nextAction}</div>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="flex space-x-2">
-                      <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                        View
+      {/* Tabs and Content */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="border-b border-gray-200 mb-6">
+          <nav className="flex -mb-px">
+            {['potential', 'loyalty', 'corporate'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`py-3 px-6 text-sm font-medium border-b-2 transition duration-200 ${
+                  activeTab === tab
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                {tab === 'potential' && 'Potential Leads'}
+                {tab === 'loyalty' && 'Loyalty Upsell'}
+                {tab === 'corporate' && 'Corporate Accounts'}
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        {/* Potential Leads Tab */}
+        {activeTab === 'potential' && (
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-800">Potential Business Leads</h3>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                Add New Lead
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {potentialLeads.map((lead) => (
+                <div key={lead.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <h4 className="font-semibold text-gray-900">{lead.name}</h4>
+                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(lead.status)}`}>
+                          {lead.status.toUpperCase()}
+                        </span>
+                        <span className="text-sm font-medium text-blue-600">{lead.value}</span>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-600 mb-3">
+                        <div>
+                          <span className="font-medium">Type:</span> {lead.type}
+                        </div>
+                        <div>
+                          <span className="font-medium">Interest:</span> {lead.interest}
+                        </div>
+                        <div>
+                          <span className="font-medium">Contact:</span> {lead.contact}
+                        </div>
+                        <div>
+                          <span className="font-medium">Phone:</span> {lead.phone}
+                        </div>
+                        <div>
+                          <span className="font-medium">Source:</span> {lead.source}
+                        </div>
+                        <div>
+                          <span className="font-medium">Last Contact:</span> {lead.lastContact}
+                        </div>
+                      </div>
+                      
+                      <p className="text-sm text-gray-600 border-t pt-2">
+                        <span className="font-medium">Notes:</span> {lead.notes}
+                      </p>
+                    </div>
+                    
+                    <div className="flex flex-col space-y-2 ml-4">
+                      <button className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                        Contact
                       </button>
-                      <button className="text-gray-600 hover:text-gray-800 text-sm font-medium">
-                        Edit
+                      <button className="bg-gray-600 text-white px-3 py-1 rounded text-sm hover:bg-gray-700">
+                        Convert
                       </button>
                     </div>
-                  </td>
-                </tr>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+            </div>
+          </div>
+        )}
 
-      {/* Pipeline Overview */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Pipeline Overview</h2>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div className="text-center p-4 border border-gray-200 rounded-lg">
-            <div className="text-xl font-bold text-gray-800">45</div>
-            <div className="text-sm text-gray-600">New</div>
+        {/* Loyalty Tab */}
+        {activeTab === 'loyalty' && (
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-800">Loyalty Member Upsell Opportunities</h3>
+            <div className="space-y-4">
+              {loyaltyLeads.map((lead) => (
+                <div key={lead.id} className="border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{lead.name}</h4>
+                      <div className="text-sm text-gray-600 mt-1">
+                        <span className="font-medium">{lead.tier} Member</span> • {lead.points} points • Last visit: {lead.lastVisit}
+                      </div>
+                      <div className="text-sm text-blue-600 font-medium mt-1">
+                        Lifetime Value: {lead.lifetimeValue} • Potential: {lead.potential}
+                      </div>
+                    </div>
+                    <div className="flex space-x-2">
+                      <button className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                        Offer Upgrade
+                      </button>
+                      <button className="bg-gray-600 text-white px-3 py-1 rounded text-sm hover:bg-gray-700">
+                        Referral Bonus
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="text-center p-4 border border-gray-200 rounded-lg">
-            <div className="text-xl font-bold text-gray-800">28</div>
-            <div className="text-sm text-gray-600">Contacted</div>
+        )}
+
+        {/* Corporate Accounts Tab */}
+        {activeTab === 'corporate' && (
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-800">Corporate Accounts</h3>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                Add Corporate Account
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {corporateAccounts.map((account) => (
+                <div key={account.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <h4 className="font-semibold text-gray-900">{account.company}</h4>
+                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(account.status)}`}>
+                          {account.status}
+                        </span>
+                        <span className="text-sm font-medium text-blue-600">{account.contractValue}</span>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-600 mb-3">
+                        <div>
+                          <span className="font-medium">Contact:</span> {account.contact} ({account.position})
+                        </div>
+                        <div>
+                          <span className="font-medium">Employees:</span> {account.employees}
+                        </div>
+                        <div>
+                          <span className="font-medium">Email:</span> {account.email}
+                        </div>
+                        <div>
+                          <span className="font-medium">Phone:</span> {account.phone}
+                        </div>
+                        <div>
+                          <span className="font-medium">Discount:</span> {account.discount}
+                        </div>
+                        <div>
+                          <span className="font-medium">Start Date:</span> {account.startDate}
+                        </div>
+                        <div>
+                          <span className="font-medium">Last Order:</span> {account.lastOrder}
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-between items-center border-t pt-2">
+                        <div className="text-sm text-gray-600">
+                          <span className="font-medium">Total Spent:</span> {account.totalSpent}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Account ID: CORP-{account.id.toString().padStart(4, '0')}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col space-y-2 ml-4">
+                      <button className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                        View Orders
+                      </button>
+                      <button className="bg-gray-600 text-white px-3 py-1 rounded text-sm hover:bg-gray-700">
+                        Manage Account
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="text-center p-4 border border-gray-200 rounded-lg">
-            <div className="text-xl font-bold text-gray-800">18</div>
-            <div className="text-sm text-gray-600">Qualified</div>
-          </div>
-          <div className="text-center p-4 border border-gray-200 rounded-lg">
-            <div className="text-xl font-bold text-gray-800">12</div>
-            <div className="text-sm text-gray-600">Proposal</div>
-          </div>
-          <div className="text-center p-4 border border-gray-200 rounded-lg">
-            <div className="text-xl font-bold text-gray-800">8</div>
-            <div className="text-sm text-gray-600">Negotiation</div>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

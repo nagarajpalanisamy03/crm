@@ -8,6 +8,8 @@ import Suppliers from './pages/Suppliers';
 import Sales from './pages/Sales';
 import Analytics from './pages/Analytics';
 import Customers from './pages/Customers';
+import Marketing from './pages/Marketing';
+import Leads from './pages/Leads';
 import './styles/globals.css';
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
           <Route path="/sales" element={<Sales />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/customers" element={<Customers />} />
+          <Route path="/marketing" element={<Marketing />} />
+          <Route path="/leads" element={<Leads />} />
         </Routes>
       </DashboardLayout>
     </Router>

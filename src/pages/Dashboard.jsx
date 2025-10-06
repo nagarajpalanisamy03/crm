@@ -39,6 +39,7 @@ const Dashboard = () => {
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h1 className="text-2xl font-bold text-gray-800">Retail Dashboard</h1>
         <p className="text-gray-600">Super Market Management System</p>
+        
       </div>
 
       {/* Quick Stats */}
@@ -84,9 +85,7 @@ const Dashboard = () => {
             {recentActivities.map((activity, index) => (
               <div key={index} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
-                    📝
-                  </div>
+                 
                   <div>
                     <p className="font-medium text-gray-800">{activity.action}</p>
                     <p className="text-sm text-gray-600">By {activity.user}</p>
@@ -106,9 +105,6 @@ const Dashboard = () => {
           {topProducts.map((product, index) => (
             <div key={index} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600">
-                  🏆
-                </div>
                 <div>
                   <p className="font-medium text-gray-800">{product.name}</p>
                   <p className="text-sm text-gray-600">{product.sales} units sold</p>
